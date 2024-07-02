@@ -99,7 +99,7 @@ Podrás usar alguno de los datasets JSON proporcionados, o crear uno propio que 
    - [JuanNebbia](https://github.com/JuanNebbia)
    - [NKrein](https://github.com/NKrein)
    - [mathiasbarbosa](https://github.com/mathiasbarbosa)
-
+cd
 ## Conclusión
 
 Este proyecto te permitirá aplicar tus conocimientos en desarrollo backend con Node.js y MongoDB, implementando un CRUD completo con control de errores y buenas prácticas. ¡Buena suerte y adelante con el desarrollo!
