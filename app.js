@@ -2,6 +2,7 @@ const express = require('express');
 const connectDB = require('./database');
 const Product = require('./product');
 const app = express();
+require('dotenv').config();
 const port = process.env.PORT ?? 3000; // Puerto
 
 connectDB(); // conexion a mongoDB

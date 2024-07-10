@@ -1,16 +1,17 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 
+//Obtenemos la URI desde las variables de entorno
+const URI = process.env.MONGODB_URLSTRING
+const DATABASE_NAME = process.env.DATABASE_NAME
+// Conectar a MongoDB usando Mongoose
 const connectDB = async () => {
   try {
-    await mongoose.connect('mongodb+srv://enzocanepa02:123456Enzocanepa@enzocan.wrpfcuf.mongodb.net/', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
-    console.log('MongoDB connected');
-  } catch (error) {
-    console.error('Error connecting to MongoDB:', error);
-    process.exit(1);
+    await mongoose.connect(URI + DATABASE_NAME);
+    console.log('MongoDB se conecto');
+  } catch (err) {
+    console.error('Falla al conectarse a MongoDB', err);
+    process.exit(1); // Detiene la aplicación si no se puede conectar a la base de datos
   }
 };
 
-module.exports = connectDB;
+module.exports = connectDB
