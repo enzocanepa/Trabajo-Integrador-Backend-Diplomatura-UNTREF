@@ -1,2 +1,22 @@
 ### Ruta principal
 GET http://localhost:3000/
+
+### Mostrar todos los accesorios
+GET http://localhost:3000/products
+
+### Buscar un producto
+GET http://localhost:3000/products/1
+
+### Agregar un producto
+POST http://localhost:3000/products
+Content-Type: application/json
+
+{
+    "codigo": 31,
+  "nombre": "Rucula",
+  "precio": 2.0,
+  "categoria": "Verdura"
+}
+
+
+
