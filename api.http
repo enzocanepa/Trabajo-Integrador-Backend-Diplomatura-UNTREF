@@ -1,22 +1,35 @@
 ### Ruta principal
 GET http://localhost:3000/
 
-### Mostrar todos los accesorios
-GET http://localhost:3000/products
+### Mostrar todos los productos
+GET http://localhost:3000/producto
 
 ### Buscar un producto
-GET http://localhost:3000/products/1
+GET http://localhost:3000/producto/32
 
 ### Agregar un producto
-POST http://localhost:3000/products
+POST http://localhost:3000/producto/
 Content-Type: application/json
 
 {
-    "codigo": 31,
-  "nombre": "Rucula",
-  "precio": 2.0,
+    "codigo": 32,
+  "nombre": "Polo rosso",
+  "precio": 3.0,
   "categoria": "Verdura"
 }
 
+### Editar un producto
+PATCH  http://localhost:3000/producto/editar/32
+Content-Type: application/json
+
+{
+    "codigo": 32,
+  "nombre": "Polo Rosso",
+  "precio": 1.0,
+  "categoria": "Verdura"
+}
+
+### Borrar un producto
+DELETE  http://localhost:3000/producto/borrar/32
 
 

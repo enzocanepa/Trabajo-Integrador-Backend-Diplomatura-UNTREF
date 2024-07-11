@@ -1,10 +1,10 @@
-process.loadEnvFile();
-
-// Dependencias
 const express = require("express");
 const morgan = require("morgan");
-const { Product } = require("./product.js")
-const { dbConnection } = require("./database.js");
+const  Product = require("./product.js")
+const conectDB = require("./database.js");
+require('dotenv').config(); // Cargar variables de entorno desde un archivo .env
+
+process.loadEnvFile();
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -13,9 +13,13 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(morgan("dev"));
 
+// Ruta principal
+app.get('/', (req, res) => {
+    res.send('Bienvenido a la API de Frutas y Verduras')
+   })
 
 // Todos los productos o filtrado por nombre, categoria
-app.get("/products",async(req,res)=>{
+app.get("/producto",async(req,res)=>{
     const { name, category } = req.query;
     try{
     // Productos por nombre
@@ -42,10 +46,10 @@ app.get("/products",async(req,res)=>{
 
 
 // Productos por ID
-app.get("/products/:id", async (req, res) => {
+app.get("/producto/:id", async (req, res) => {
   const { id } = req.params;
   try {
-      const product = await Product.findOne({ codigo: _id });
+      const product = await Product.findOne({ codigo: id });
       if (!product) {
           return res.status(404).json({ message: "No se encontró ningun producto con el id: " + id });
       }
@@ -56,8 +60,9 @@ app.get("/products/:id", async (req, res) => {
   }
 });
 
+
 // Añadiendo productos
-app.post("/products",async(req,res)=>{
+app.post("/producto",async(req,res)=>{
   try{
       const newProduct = new Product(req.body);
       if(!newProduct)return res.status(401).json({error:"Es necesario añadir un nuevo producto"});
@@ -68,8 +73,9 @@ app.post("/products",async(req,res)=>{
   }
 });
 
-// Modificar un producto
-app.patch("/products/edit/:id", async (req, res) => {
+
+// Editar un producto
+app.patch("/producto/editar/:id", async (req, res) => {
   const { codigo, price, nombre, categoria } = req.body;
   const id  = req.params.id;
   
@@ -88,24 +94,26 @@ app.patch("/products/edit/:id", async (req, res) => {
       if (!editProduct) return res.json({ message: "El precio no se pudo actualizar" });
       return res.json({ message: "Producto actualizado", price });
   } catch (error) {
-      res.status(500).json({ error: "No se encontro producto" });
+      res.status(500).json({ error: "Error en el servidor al actualizar el producto" });
   }
 });
 
-app.delete("/products/delete/:id",async(req,res)=>{
+
+// Borrar un producto
+app.delete("/producto/borrar/:id",async(req,res)=>{
   const {id} = req.params;
   try{
       const deleteProduct = await Product.findOneAndDelete({codigo:id});
       if(!deleteProduct) return res.status(404).json({message:"Producto no encontrado"});
       res.json({message:"Producto eliminado exitosamente"});
   }catch(error){
-      res.status(500).json({error:"Error en el servidor al intentar borrar el producto"});
+      res.status(500).json({error:"Error en el servidor al borrar el producto"});
   }
 });
 
 app.listen(port,()=>{
-  console.log(`Aplicacion inicada en el puerto ${port}`);
+  console.log(`Aplicacion corriendo ${port}`);
   console.log(`http://localhost:${port}/`);
   console.log(new Date());
-  dbConnection;
+  conectDB;
 });
